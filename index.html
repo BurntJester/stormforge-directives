@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stormforge Directives | Governance Oversight, Policy Strategy, Risk Mitigation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --slate-blue: #50728f;
+            --warm-grey: #e8e5e3;
+            --warm-grey-light: #f4f3f2;
+            --charcoal: #2b2b2b;
+            --white: #ffffff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--warm-grey-light);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            margin-top: 0;
+            line-height: 1.2;
+            color: var(--charcoal);
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header Section */
+        header {
+            background-color: var(--charcoal);
+            padding: 1.5rem 0;
+            border-bottom: 4px solid var(--slate-blue);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .directives-logo {
+            height: 40px; /* Scales the full logo to fit the header row */
+            width: auto; /* Maintains correct aspect ratio */
+        }
+
+        .header-title {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: var(--warm-grey);
+            padding: 5rem 0;
+            text-align: center;
+            border-bottom: 1px solid #dcd7d4;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--slate-blue);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+            color: var(--charcoal);
+        }
+
+        /* Competencies Grid */
+        .services {
+            padding: 5rem 0;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Forces 4x1 on desktop */
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Forces 2x2 on medium screens/tablets */
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Already handled by your existing mobile media query, but add this inside it: */
+        /* Forces 1x4 on mobile */
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .service-card {
+            background-color: var(--white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--slate-blue);
+        }
+
+        .icon {
+            width: 48px;
+            height: 48px;
+            fill: var(--slate-blue);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Authority Section */
+        .authority {
+            background-color: var(--slate-blue);
+            color: var(--white);
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .authority h2 {
+            color: var(--white);
+            font-size: 2.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .authority p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Call to Action */
+        .cta {
+            padding: 5rem 0;
+            text-align: center;
+            background-color: var(--charcoal);
+            color: var(--white);
+        }
+
+        .cta h2 {
+            color: var(--white);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--slate-blue);
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 3px;
+            margin-top: 1.5rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #3b5a75;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.25rem;
+            }
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <img src="image_0.png" alt="Stormforge Industries Logo" class="directives-logo">
+            <h1 class="header-title">Stormforge Directives</h1>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Stop Margin Leakage. Mitigate Risk.</h1>
+            <p>We conduct rapid operational investigations and design end-to-end policy frameworks to stop cash bleed and scale your SME securely during market crises.</p>
+        </div>
+    </section>
+
+    <section class="services container">
+        <div class="services-grid">
+            
+            <div class="service-card">
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+                <h3>Process Audits</h3>
+                <p>We execute rigorous, highly focused operational investigations to identify exactly where your business is losing money due to systemic inefficiencies, unstable processes, and operational process failures.</p>
+            </div>
+
+            <div class="service-card">
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                </svg>
+                <h3>Risk Mitigation & Scaling</h3>
+                <p>We construct the end-to-end operational policy required for small and medium enterprises to scale safely. We translate abstract governance into concrete frameworks that protect your margins and your liability.</p>
+            </div>
+
+            <div class="service-card">
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                </svg>
+                <h3>Policy Failure Investigations</h3>
+                <p>When internal systems break down or critical operations fail, we provide rigorous, independent analysis. We isolate the root cause of the operational failure and engineer a permanent, structural fix.</p>
+            </div>
+            <div class="service-card">
+                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/>
+                </svg>
+                <h3>Strategic Problem Solving</h3>
+                <p>Do you have a problem you just can't solve? We will investigate exactly what happened, what the cause is, and what the solution should be. Then we'll write the strategic policy so that you can go back to doing what you do best.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="authority">
+        <div class="container">
+            <h2>Strategic Oversight</h2>
+            <p>We deliver end-to-end policy and ethics consulting tailored specifically for small business owners and sole traders. By treating your operations as a functional system, we engineer out the inefficiencies and build resilience against volatile economic conditions.</p>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Let us look at your current setup.</h2>
+            <p style="color: #ccc; margin-bottom: 2rem;">No jargon. Just a practical conversation about protecting your margins and optimising your business.</p>
+            <a href="mailto:directives@stormforge.industries" class="btn">Book a Free Chat</a>
+        </div>
+    </section>
+
+</body>
+</html>
