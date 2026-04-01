@@ -38,19 +38,28 @@
         /* Header Section */
         header {
             background-color: var(--charcoal);
-            padding: 1.5rem 0;
+            padding: 1rem 0; /* Slightly reduced padding to save screen space when sticky */
             border-bottom: 4px solid var(--slate-blue);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Pushes the brand left and the nav right */
+        }
+
+        .header-brand {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
 
         .directives-logo {
-            height: 40px; /* Scales the full logo to fit the header row */
-            width: auto; /* Maintains correct aspect ratio */
+            height: 40px;
+            width: auto;
         }
 
         .header-title {
@@ -60,6 +69,24 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             margin: 0;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 2rem; /* Spacing between the links */
+            align-items: center;
+        }
+
+        .header-nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.2s ease;
+        }
+
+        .header-nav a:hover {
+            color: var(--slate-blue);
         }
 
         /* Hero Section */
@@ -195,8 +222,15 @@
 
     <header>
         <div class="container header-content">
-            <img src="image_0.png" alt="Stormforge Industries Logo" class="directives-logo">
-            <h1 class="header-title">Stormforge Directives</h1>
+            <div class="header-brand">
+                <img src="image_0.png" alt="Stormforge Industries Logo" class="directives-logo">
+                <h1 class="header-title">Stormforge Directives</h1>
+            </div>
+            
+            <nav class="header-nav">
+                <a href="about.html">About Us</a>
+                <a href="mailto:directives@stormforge.industries">Contact Us</a>
+            </nav>
         </div>
     </header>
 
