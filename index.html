@@ -1,297 +1,748 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stormforge Directives | Governance Oversight, Policy Strategy, Risk Mitigation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Stormforge Directives | Strategic Consulting</title>
+    
+    <!-- Google Fonts: Inter for a clean, modern, professional look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration for Custom Brand Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        storm: {
+                            50: '#fafafa',
+                            100: '#f4f4f5',
+                            200: '#e4e4e7',
+                            300: '#d4d4d8',
+                            400: '#a1a1aa',
+                            500: '#71717a',
+                            600: '#52525b',
+                            700: '#3f3f46',
+                            800: '#27272a',
+                            900: '#18181b',
+                            950: '#09090b',
+                        },
+                        accent: {
+                            light: '#38bdf8', // Light blue
+                            DEFAULT: '#0ea5e9', // Primary accent
+                            dark: '#0369a1', // Deep accent
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS for specialized styling (grid background, glass effects) -->
     <style>
-        :root {
-            --slate-blue: #50728f;
-            --warm-grey: #e8e5e3;
-            --warm-grey-light: #f4f3f2;
-            --charcoal: #2b2b2b;
-            --white: #ffffff;
+        body {
+            background-color: #09090b; /* storm-950 */
+            color: #f4f4f5; /* storm-100 */
+        }
+        
+        .bg-hex-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%23ffffff' fill-opacity='0.015' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-            background-color: var(--warm-grey-light);
-            color: var(--charcoal);
-            line-height: 1.6;
+        .glass-nav {
+            background: rgba(9, 9, 11, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        h1, h2, h3 {
-            margin-top: 0;
-            line-height: 1.2;
-            color: var(--charcoal);
+        .glass-card {
+            background: rgba(24, 24, 27, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 0 2rem;
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(14, 165, 233, 0.3); /* accent border on hover */
+            box-shadow: 0 10px 30px -10px rgba(14, 165, 233, 0.15);
         }
 
-        /* Header Section */
-        header {
-            background-color: var(--charcoal);
-            padding: 1rem 0; /* Slightly reduced padding to save screen space when sticky */
-            border-bottom: 4px solid var(--slate-blue);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+        /* Spotlight Hover Effects for sleek cards */
+        .glow-card {
+            background: rgba(24, 24, 27, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .glow-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(800px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(14, 165, 233, 0.08), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .glow-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: radial-gradient(400px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(14, 165, 233, 0.5), transparent 40%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 1;
         }
 
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between; /* Pushes the brand left and the nav right */
+        .glow-card:hover::before, .glow-card:hover::after {
+            opacity: 1;
+        }
+        
+        .glow-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .glow-content {
+            position: relative;
+            z-index: 2;
         }
 
-        .header-brand {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        /* Modal Transitions */
+        #expertise-modal {
+            transition: opacity 0.4s ease;
+            opacity: 0;
+            pointer-events: none;
+            backdrop-filter: blur(8px);
+        }
+        #expertise-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        #modal-content-card {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+            transform: scale(0.95) translateY(20px);
+            opacity: 0;
+        }
+        #expertise-modal.active #modal-content-card {
+            transform: scale(1) translateY(0);
+            opacity: 1;
         }
 
-        .directives-logo {
-            height: 40px;
-            width: auto;
+        /* Custom scrollbar for modal */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(24, 24, 27, 0.5);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(82, 82, 91, 0.8);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(113, 113, 122, 1);
         }
 
-        .header-title {
-            color: var(--white);
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin: 0;
+        /* Utility classes for JS scroll animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
-
-        .header-nav {
-            display: flex;
-            gap: 2rem; /* Spacing between the links */
-            align-items: center;
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
-
-        .header-nav a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: color 0.2s ease;
-        }
-
-        .header-nav a:hover {
-            color: var(--slate-blue);
-        }
-
-        /* Hero Section */
-        .hero {
-            background-color: var(--warm-grey);
-            padding: 5rem 0;
-            text-align: center;
-            border-bottom: 1px solid #dcd7d4;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            color: var(--slate-blue);
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            max-width: 700px;
-            margin: 0 auto 2rem auto;
-            color: var(--charcoal);
-        }
-
-        /* Competencies Grid */
-        .services {
-            padding: 5rem 0;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* Forces 4x1 on desktop */
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        /* Forces 2x2 on medium screens/tablets */
-        @media (max-width: 1024px) {
-            .services-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        /* Already handled by your existing mobile media query, but add this inside it: */
-        /* Forces 1x4 on mobile */
-        @media (max-width: 768px) {
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .service-card {
-            background-color: var(--white);
-            padding: 2.5rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--slate-blue);
-        }
-
-        .icon {
-            width: 48px;
-            height: 48px;
-            fill: var(--slate-blue);
-            margin-bottom: 1.5rem;
-        }
-
-        .service-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Authority Section */
-        .authority {
-            background-color: var(--slate-blue);
-            color: var(--white);
-            padding: 5rem 0;
-            text-align: center;
-        }
-
-        .authority h2 {
-            color: var(--white);
-            font-size: 2.25rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .authority p {
-            max-width: 800px;
-            margin: 0 auto;
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        /* Call to Action */
-        .cta {
-            padding: 5rem 0;
-            text-align: center;
-            background-color: var(--charcoal);
-            color: var(--white);
-        }
-
-        .cta h2 {
-            color: var(--white);
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--slate-blue);
-            color: var(--white);
-            padding: 1rem 2.5rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 3px;
-            margin-top: 1.5rem;
-            transition: background-color 0.2s ease;
-        }
-
-        .btn:hover {
-            background-color: #3b5a75;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.25rem;
-            }
-            .hero p {
-                font-size: 1.1rem;
-            }
+        
+        /* Subtle glow effect behind main hero text */
+        .hero-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(14,165,233,0.225) 0%, rgba(2,6,23,0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            pointer-events: none;
         }
     </style>
 </head>
-<body>
+<body class="antialiased overflow-x-hidden selection:bg-accent selection:text-white relative">
 
-    <header>
-        <div class="container header-content">
-            <div class="header-brand">
-                <img src="image_0.png" alt="Stormforge Industries Logo" class="directives-logo">
-                <h1 class="header-title">Stormforge Directives</h1>
+    <!-- Global Hex Grid Overlay -->
+    <div class="absolute inset-0 pointer-events-none z-[1] bg-hex-pattern"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+                    <!-- Custom Image Logo -->
+                    <img src="image_0.png" alt="Stormforge Industries Logo" class="directives-logo w-8 h-8 object-contain">
+                    <span class="font-bold text-xl tracking-wide text-white">
+                        STORMFORGE <span class="text-storm-400 font-light">| Directives</span>
+                        <!-- NOTE: For the personal site, change the above to: STORMFORGE <span class="text-storm-400 font-light">| Hearth</span> -->
+                    </span>
+                </div>
+
+                <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="about.html" class="text-sm font-medium text-storm-300 hover:text-white transition-colors">About Us</a>
+                <a href="https://hearth.stormforge.industries/" class="text-sm font-medium text-storm-300 hover:text-white transition-colors flex items-center gap-1 group">
+                    Hearth
+                    <svg class="w-3.5 h-3.5 opacity-70 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </a>
+                <a href="#contact" class="px-5 py-2.5 rounded-full bg-white text-storm-900 font-medium text-sm hover:bg-storm-200 transition-colors shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                        Engage Us
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-storm-300 hover:text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="md:hidden hidden bg-storm-900 border-t border-storm-800 absolute w-full">
+            <div class="px-4 pt-2 pb-6 space-y-1 shadow-2xl">
+                <a href="about.html" class="block px-3 py-3 text-base font-medium text-storm-300 hover:text-white hover:bg-storm-800 rounded-md">About Us</a>
+                <a href="https://hearth.stormforge.industries/" class="block px-3 py-3 text-base font-medium text-storm-300 hover:text-white hover:bg-storm-800 rounded-md flex items-center gap-2">
+                    Hearth <svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </a>
+                <a href="#contact" class="block px-3 py-3 text-base font-medium text-accent hover:text-accent-light rounded-md mt-4">Engage Us &rarr;</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <!-- Subtle background glow -->
+        <div class="hero-glow"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-storm-800/50 border border-storm-700 text-sm text-accent mb-8 animate-fade-in-up" style="animation-delay: 0.1s;">
+                <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                Strategic Consulting for the Modern Enterprise
+                <!-- For Hearth: "Boutique Consulting for Visionary Leaders" -->
             </div>
             
-            <nav class="header-nav">
-                <a href="https://hearth.stormforge.industries/">The Hearth</a>
-                <a href="/about/">About Us</a>
-                <a href="mailto:directives@stormforge.industries">Contact Us</a>
-            </nav>
-        </div>
-    </header>
-
-    <section class="hero">
-        <div class="container">
-            <h1>Policy Strategy and Business Problem Solving.</h1>
-            <p>Stop margin leakage and mitigate risk by letting us conduct rigorous operational investigations into your business's problems, and design end-to-end policy frameworks to optimise your processes, fix policy gaps, and solve revenue problems.</p>
-        </div>
-    </section>
-
-    <section class="services container">
-        <div class="services-grid">
+            <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-tight animate-fade-in-up" style="animation-delay: 0.2s;">
+                Navigating Complexity.<br/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-storm-200 to-storm-500">
+                    Delivering Clarity.
+                </span>
+            </h1>
             
-            <div class="service-card">
-                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                </svg>
-                <h3>Process Audits</h3>
-                <p>We execute rigorous, highly focused operational investigations to identify exactly where your business is losing money due to systemic inefficiencies, unstable processes, and operational process failures.</p>
+            <p class="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-storm-400 mb-10 animate-fade-in-up" style="animation-delay: 0.3s;">
+                We forge resilient strategies and policy frameworks to help you adapt to changing conditions and solve complex problems.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.4s;">
+                <a href="#contact" class="px-8 py-4 rounded-full bg-accent text-white font-medium hover:bg-accent-light transition-all shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_30px_rgba(14,165,233,0.5)]">
+                    Schedule a Consultation
+                </a>
+                <a href="#expertise" class="px-8 py-4 rounded-full bg-transparent border border-storm-600 text-white font-medium hover:bg-storm-800 transition-colors">
+                    Explore Our Expertise
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce opacity-50">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Expertise Section -->
+    <section id="expertise" class="py-24 relative bg-storm-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-sm font-semibold text-accent uppercase tracking-widest mb-2">Core Competencies</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-white">Forging Pathways to Growth</h3>
+                <div class="w-20 h-1 bg-accent mx-auto mt-6 rounded-full"></div>
             </div>
 
-            <div class="service-card">
-                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
-                </svg>
-                <h3>Risk Mitigation & Scaling</h3>
-                <p>We construct the end-to-end operational policy required for small and medium enterprises to scale safely. We translate abstract governance into concrete frameworks that protect your margins and your liability.</p>
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                <!-- Service 1 -->
+                <div class="glow-card p-8 reveal" onclick="openModal('service1')">
+                    <div class="glow-content">
+                        <div class="w-12 h-12 rounded-lg bg-storm-800/80 flex items-center justify-center mb-6 border border-storm-700 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+                            <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-3">Process Audits</h4>
+                        <p class="text-storm-400 leading-relaxed text-sm mb-6">
+                            We execute rigorous, highly focused operational investigations to identify exactly where your business is losing money due to systemic inefficiencies, unstable processes, and operational process failures.
+                        </p>
+                        <div class="flex items-center text-accent text-sm font-semibold uppercase tracking-wider group">
+                            Explore Capability <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="service-card">
-                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
-                </svg>
-                <h3>Policy Failure Investigations</h3>
-                <p>When internal systems break down or critical operations fail, we provide rigorous, independent analysis. We isolate the root cause of the operational failure and engineer a permanent, structural fix.</p>
-            </div>
-            <div class="service-card">
-                <svg class="icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/>
-                </svg>
-                <h3>Strategic Problem Solving</h3>
-                <p>Do you have a problem you just can't solve? We will investigate exactly what happened, what the cause is, and what the solution should be. Then we'll write the strategic policy so that you can go back to doing what you do best.</p>
+                <!-- Service 2 -->
+                <div class="glow-card p-8 reveal" style="transition-delay: 100ms;" onclick="openModal('service2')">
+                    <div class="glow-content">
+                        <div class="w-12 h-12 rounded-lg bg-storm-800/80 flex items-center justify-center mb-6 border border-storm-700 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+                            <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-3">Risk Mitigation & Scaling</h4>
+                        <p class="text-storm-400 leading-relaxed text-sm mb-6">
+                            We construct the end-to-end operational policy required for small and medium enterprises to scale safely. We translate abstract governance into concrete frameworks that protect your margins and your liability.
+                        </p>
+                        <div class="flex items-center text-accent text-sm font-semibold uppercase tracking-wider group">
+                            Explore Capability <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="glow-card p-8 reveal" style="transition-delay: 200ms;" onclick="openModal('service3')">
+                    <div class="glow-content">
+                        <div class="w-12 h-12 rounded-lg bg-storm-800/80 flex items-center justify-center mb-6 border border-storm-700 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+                            <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                            </svg>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-3">Policy Failure Investigations</h4>
+                        <p class="text-storm-400 leading-relaxed text-sm mb-6">
+                            When internal systems break down or critical operations fail, we provide rigorous, independent analysis. We isolate the root cause of the operational failure and engineer a permanent, structural fix.
+                        </p>
+                        <div class="flex items-center text-accent text-sm font-semibold uppercase tracking-wider group">
+                            Explore Capability <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="glow-card p-8 reveal" style="transition-delay: 300ms;" onclick="openModal('service4')">
+                    <div class="glow-content">
+                        <div class="w-12 h-12 rounded-lg bg-storm-800/80 flex items-center justify-center mb-6 border border-storm-700 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+                            <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                        <h4 class="text-2xl font-bold text-white mb-3">Strategic Problem Solving</h4>
+                        <p class="text-storm-400 leading-relaxed text-sm mb-6">
+                            Do you have a problem you just can't solve? We will investigate exactly what happened, what the cause is, and what the solution should be. Then we'll write the strategic policy so that you can go back to doing what you do best.
+                        </p>
+                        <div class="flex items-center text-accent text-sm font-semibold uppercase tracking-wider group">
+                            Explore Capability <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section class="authority">
-        <div class="container">
-            <h2>Strategic Oversight</h2>
-            <p>We deliver end-to-end policy and ethics consulting tailored specifically for small business owners and sole traders. By treating your operations as a functional system, we engineer out the inefficiencies and build resilience against volatile economic conditions.</p>
+    <!-- Approach Section -->
+    <section id="approach" class="py-24 relative overflow-hidden bg-gradient-to-b from-storm-950 via-storm-900 to-storm-950">
+        <!-- Top edge subtle transition glow -->
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent z-0"></div>
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-3/4 h-24 bg-accent/15 blur-[40px] rounded-full pointer-events-none z-0"></div>
+        
+        <!-- Bottom edge subtle transition glow -->
+        <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent z-0"></div>
+        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-3/4 h-24 bg-accent/15 blur-[40px] rounded-full pointer-events-none z-0"></div>
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col items-center text-center">
+                <!-- Text Content -->
+                <div class="reveal w-full">
+                    <h2 class="text-sm font-semibold text-accent uppercase tracking-widest mb-2">Our Methodology</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-6">Precision engineered solutions, not generic advice.</h3>
+                    <p class="text-storm-400 text-lg mb-12 leading-relaxed max-w-3xl mx-auto">
+                        At Stormforge, we believe that off-the-shelf consulting models fall short in today's nuanced market. We deploy a surgical approach to problem-solving, integrating deeply with your leadership to understand the mechanics of your specific challenges.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                        <div class="bg-storm-800/40 border border-storm-700/50 rounded-xl p-8 backdrop-blur-sm shadow-lg transition-transform duration-300 hover:-translate-y-1">
+                            <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-6">
+                                <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-white mb-3">Diagnostic First</h4>
+                            <p class="text-storm-400 text-sm leading-relaxed">Deep-dive analysis before solution design to ensure we solve the root cause, not just the symptom.</p>
+                        </div>
+                        <div class="bg-storm-800/40 border border-storm-700/50 rounded-xl p-8 backdrop-blur-sm shadow-lg transition-transform duration-300 hover:-translate-y-1" style="transition-delay: 100ms;">
+                            <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-6">
+                                <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-white mb-3">Tactical Execution</h4>
+                            <p class="text-storm-400 text-sm leading-relaxed">Strategies that live in the real world, not just on paper. Built specifically for seamless implementation.</p>
+                        </div>
+                        <div class="bg-storm-800/40 border border-storm-700/50 rounded-xl p-8 backdrop-blur-sm shadow-lg transition-transform duration-300 hover:-translate-y-1" style="transition-delay: 200ms;">
+                            <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-6">
+                                <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-white mb-3">Measurable Impact</h4>
+                            <p class="text-storm-400 text-sm leading-relaxed">Clear Key Performance Indicators tied to every engagement phase, guaranteeing accountable results.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <section class="cta">
-        <div class="container">
-            <h2>Let us look at your current setup.</h2>
-            <p style="color: #ccc; margin-bottom: 2rem;">No jargon. Just a practical conversation about protecting your margins and optimising your business.</p>
-            <a href="mailto:directives@stormforge.industries" class="btn">Book a Free Chat</a>
+    <!-- CTA Section -->
+    <section id="contact" class="py-24 relative overflow-hidden bg-storm-950">
+        <!-- Glow -->
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-64 bg-accent/15 blur-[100px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center reveal">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Ready to forge the future?</h2>
+            <p class="text-lg text-storm-400 mb-10 max-w-2xl mx-auto">
+                Initiate a dialogue. Whether you are navigating a critical transition or seeking operational dominance, we are ready to assist.
+            </p>
+            
+            <form onsubmit="submitForm(event)" class="max-w-md mx-auto space-y-4 text-left glass-card p-8 rounded-2xl">
+                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-storm-300 mb-1">Full Name</label>
+                    <input type="text" id="name" name="name" required class="w-full px-4 py-3 bg-storm-900 border border-storm-700 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent text-white outline-none transition-all placeholder-storm-600" placeholder="Jane Doe">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-storm-300 mb-1">Corporate Email</label>
+                    <input type="email" id="email" name="email" required class="w-full px-4 py-3 bg-storm-900 border border-storm-700 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent text-white outline-none transition-all placeholder-storm-600" placeholder="jane@company.com">
+                </div>
+                <div>
+                    <label for="message" class="block text-sm font-medium text-storm-300 mb-1">Inquiry Context</label>
+                    <textarea id="message" name="message" required rows="4" class="w-full px-4 py-3 bg-storm-900 border border-storm-700 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent text-white outline-none transition-all resize-none placeholder-storm-600" placeholder="Briefly describe your objectives..."></textarea>
+                </div>
+                <button type="submit" class="w-full py-4 bg-white text-storm-900 font-bold rounded-lg hover:bg-storm-200 transition-colors shadow-lg mt-2 flex justify-center items-center gap-2">
+                    Submit Inquiry
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </button>
+                <div id="form-success" class="hidden text-emerald-400 text-sm text-center mt-3 font-medium">Message received. We will be in touch shortly.</div>
+            </form>
         </div>
     </section>
 
+    <!-- Modal Overlay for Expertise -->
+    <div id="expertise-modal" class="fixed inset-0 z-[100] flex items-center justify-center px-4 sm:px-6 bg-black/70">
+        <div id="modal-content-card" class="bg-storm-950 border border-storm-700/60 rounded-2xl max-w-2xl w-full shadow-[0_0_50px_rgba(0,0,0,0.8)] relative overflow-hidden flex flex-col max-h-[90vh]">
+            <!-- Decorative Top Border -->
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-accent to-transparent opacity-70"></div>
+            
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute top-5 right-5 text-storm-400 hover:text-white bg-storm-900/50 hover:bg-storm-800 rounded-full p-2 transition-all z-10">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            
+            <!-- Dynamic Content Area -->
+            <div class="p-8 md:p-10 overflow-y-auto custom-scrollbar relative">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-storm-800 border border-storm-700 text-xs text-accent mb-6">
+                    <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
+                    Deep Dive
+                </div>
+                <h3 id="modal-title" class="text-3xl md:text-4xl font-bold text-white mb-2">Capability Title</h3>
+                <h4 id="modal-subtitle" class="text-lg text-accent mb-6 font-medium">Strategic Objective</h4>
+                
+                <div id="modal-body" class="prose prose-invert prose-p:text-storm-300 prose-li:text-storm-300 max-w-none">
+                    <!-- JS injects content here -->
+                </div>
+                
+                <div class="mt-10 pt-6 border-t border-storm-800/60">
+                    <button onclick="closeModal(); document.getElementById('contact').scrollIntoView({behavior: 'smooth'})" class="px-6 py-3 rounded-lg bg-accent text-white font-medium hover:bg-accent-light transition-all text-sm w-full sm:w-auto text-center shadow-[0_0_15px_rgba(14,165,233,0.3)]">
+                        Discuss This Need
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-storm-950 pt-16 pb-8 border-t border-storm-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <!-- Brand -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="image_0.png" alt="Stormforge Industries Logo" class="h-6 w-auto">
+                        <span class="font-bold text-lg tracking-wide text-white">
+                            STORMFORGE <span class="text-storm-500 font-light">| Industries</span>
+                        </span>
+                    </div>
+                    <p class="text-storm-400 text-sm leading-relaxed max-w-sm">
+                        Premier advisory and support services. Empowering individuals and businesses to navigate complex challenges and achieve long-term success.
+                    </p>
+                </div>
+                
+                <!-- Links -->
+                <div class="md:col-start-4">
+                    <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Navigation</h4>
+                    <ul class="space-y-2 text-sm text-storm-400">
+                        <li><a href="#" class="hover:text-accent transition-colors">Home</a></li>
+                        <li><a href="#expertise" class="hover:text-accent transition-colors">Expertise</a></li>
+                        <li><a href="#approach" class="hover:text-accent transition-colors">Our Approach</a></li>
+                        <li><a href="#contact" class="hover:text-accent transition-colors">Contact</a></li>
+                    </ul>
+                </div>              
+            </div>
+            
+            <div class="pt-8 border-t border-storm-800 text-center md:text-left text-sm text-storm-500 flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; <span id="year"></span> Stormforge Industries. All rights reserved.</p>
+                <div class="mt-4 md:mt-0 space-x-4 flex">
+                                       
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const icon = document.getElementById('menu-icon');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            if (menu.classList.contains('hidden')) {
+                icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16'); // Hamburger
+            } else {
+                icon.setAttribute('d', 'M6 18L18 6M6 6l12 12'); // Close (X)
+            }
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+                icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            });
+        });
+
+        // Navbar Scroll Effect (Solidify background on scroll)
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('bg-storm-900/95', 'shadow-lg');
+                navbar.classList.remove('glass-nav');
+            } else {
+                navbar.classList.remove('bg-storm-900/95', 'shadow-lg');
+                navbar.classList.add('glass-nav');
+            }
+        });
+
+        // Scroll Reveal Animation (Intersection Observer)
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
+
+        // Mouse Move Effect for Glow Cards
+        document.querySelectorAll('.glow-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // Modal Content Data
+        const expertiseData = {
+            'service1': {
+                title: 'Process Audits',
+                subtitle: 'Identifying and Eliminating Systemic Inefficiencies',
+                content: `
+                    <p class="mb-4">Inefficiency is a silent tax on your margins. Our Process Audits are designed as rigorous and highly focused operational investigations. We look beyond the surface metrics to map the entire operational reality against your intended policies and identify exactly where your business is losing money, time, or momentum.</p>
+                    <p class="mb-6">We provide an unvarnished, objective view of how your systems actually function in the real world versus how they exist on paper, giving leadership the exact insights needed to stop revenue leaks and boost efficiencies.</p>
+                    <h5 class="text-white font-semibold text-lg mb-3">Key Focus Areas:</h5>
+                    <ul class="list-disc pl-5 space-y-2 mb-6 text-sm text-storm-300">
+                        <li>Comprehensive Policy Process Mapping</li>
+                        <li>Operational Bottleneck Identification</li>
+                        <li>Resource Allocation & Utilisation Auditing</li>
+                        <li>Maximising System Efficiency and Effectiveness</li>
+                    </ul>
+                `
+            },
+            'service2': {
+                title: 'Risk Mitigation & Scaling',
+                subtitle: 'Securing Margins and Liability During Growth',
+                content: `
+                    <p class="mb-4">Growth without governance is a liability. We construct the end-to-end operational policy required for small and medium enterprises to scale safely. By translating abstract governance into concrete, actionable frameworks, we protect your margins and your enterprise from unnecessary exposure as you expand.</p>
+                    <p class="mb-6">We ensure that as your headcount, client base, and operational complexity increase, your foundational protocols hold firm to prevent the chaotic growing pains that stall momentum when you least need such problems.</p>
+                    <h5 class="text-white font-semibold text-lg mb-3">Key Focus Areas:</h5>
+                    <ul class="list-disc pl-5 space-y-2 mb-6 text-sm text-storm-300">
+                        <li>Scalable Standard Operating Procedures</li>
+                        <li>Liability Analysis & Adaptive Policies</li>
+                        <li>End-to-end Compliance Integration</li>
+                        <li>Operational Stress Reporting</li>
+                    </ul>
+                `
+            },
+            'service3': {
+                title: 'Policy Failure Investigations',
+                subtitle: 'Root Cause Analysis for Operational Breakdowns',
+                content: `
+                    <p class="mb-4">When internal systems break down or critical operations fail, independent analysis is crucial. We provide that rigorous investigation into the mechanics of the failure. We don't place blame, but we isolate the structural and functional causes of the operational breakdown to engineer a permanent policy fix.</p>
+                    <p class="mb-6">We act as a neutral third party to dissect complex system failures, ensuring that the same mistake is mathematically and operationally prevented from happening twice.</p>
+                    <h5 class="text-white font-semibold text-lg mb-3">Key Focus Areas:</h5>
+                    <ul class="list-disc pl-5 space-y-2 mb-6 text-sm text-storm-300">
+                        <li>Independent Post-Mortem Analysis</li>
+                        <li>Root Cause Isolation & Deconstruction</li>
+                        <li>Corrective Action Strategy Formulation</li>
+                        <li>Resilient Policy Re-engineering</li>
+                    </ul>
+                `
+            },
+            'service4': {
+                title: 'Strategic Problem Solving',
+                subtitle: 'Bespoke Solutions for Complex Challenges',
+                content: `
+                    <p class="mb-4">Some problems defy standard operating procedures. When you face an unprecedented or intractable challenge, we investigate exactly what happened, determine the underlying cause, and design the bespoke solution. We write the strategic policy and implementation plan, allowing you to return your focus to core business objectives.</p>
+                    <p class="mb-6">Whether facing abrupt market shifts, internal organizational crises, or highly specific operational hurdles, we serve as an elite strategic advisor to build the road out.</p>
+                    <h5 class="text-white font-semibold text-lg mb-3">Key Focus Areas:</h5>
+                    <ul class="list-disc pl-5 space-y-2 mb-6 text-sm text-storm-300">
+                        <li>Crisis Navigation & Management Strategies</li>
+                        <li>Custom Framework Development</li>
+                        <li>Executive Decision Support & Modeling</li>
+                        <li>Rapid Action Planning & Execution Oversight</li>
+                    </ul>
+                `
+            }
+        };
+
+        // Modal Logic
+        const modal = document.getElementById('expertise-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalSubtitle = document.getElementById('modal-subtitle');
+        const modalBody = document.getElementById('modal-body');
+
+        function openModal(key) {
+            const data = expertiseData[key];
+            if (!data) return;
+            
+            modalTitle.textContent = data.title;
+            modalSubtitle.textContent = data.subtitle;
+            modalBody.innerHTML = data.content;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on clicking outside
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        async function submitForm(e) {
+            e.preventDefault();
+    
+            // Identify the button and its parent form
+            const btn = e.currentTarget.tagName === 'BUTTON' ? e.currentTarget : e.currentTarget.querySelector('button[type="submit"]');
+            const form = btn.closest('form');
+            const originalText = btn.innerHTML;
+            
+            // Trigger loading state
+            btn.innerHTML = `<svg class="animate-spin h-5 w-5 text-storm-900 inline mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...`;
+            btn.disabled = true;
+            
+            // Package the form data and append the access key
+            const formData = new FormData(form);
+            formData.append("access_key", "fafc89eb-ee5c-4963-a179-e4eb1fface45");
+            
+            try {
+                const response = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('form-success').classList.remove('hidden');
+                    form.reset();
+                } else {
+                    alert("There was an issue submitting your request. Please email us directly.");
+                }
+            } catch (error) {
+                alert("Network error. Please check your connection and try again.");
+            } finally {
+                // Restore button state
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('form-success').classList.add('hidden');
+                }, 5000);
+            }
+        }
+    </script>
 </body>
 </html>
