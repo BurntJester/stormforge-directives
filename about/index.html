@@ -1,279 +1,475 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | Stormforge Directives</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration (Matching index.html) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        storm: {
+                            50: '#fafafa',
+                            100: '#f4f4f5',
+                            200: '#e4e4e7',
+                            300: '#d4d4d8',
+                            400: '#a1a1aa',
+                            500: '#71717a',
+                            600: '#52525b',
+                            700: '#3f3f46',
+                            800: '#27272a',
+                            900: '#18181b',
+                            950: '#09090b', // Obsidian/Zinc dark
+                        },
+                        accent: {
+                            light: '#38bdf8',
+                            DEFAULT: '#0ea5e9',
+                            dark: '#0369a1',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
     <style>
-        :root {
-            --slate-blue: #50728f;
-            --warm-grey: #e8e5e3;
-            --warm-grey-light: #f4f3f2;
-            --charcoal: #2b2b2b;
-            --white: #ffffff;
+        body {
+            background-color: #09090b; /* storm-950 */
+            color: #f4f4f5; /* storm-100 */
+        }
+        
+        .bg-hex-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%23ffffff' fill-opacity='0.015' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-            background-color: var(--warm-grey-light);
-            color: var(--charcoal);
-            line-height: 1.6;
+        .glass-nav {
+            background: rgba(9, 9, 11, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        h1, h2, h3 {
-            margin-top: 0;
-            line-height: 1.2;
-            color: var(--charcoal);
+        .glass-card {
+            background: rgba(24, 24, 27, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        p {
-            margin-bottom: 1.5rem;
+        .glow-card {
+            background: rgba(24, 24, 27, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .glow-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(800px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(14, 165, 233, 0.08), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .glow-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: radial-gradient(400px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(14, 165, 233, 0.5), transparent 40%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 1;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 2rem;
+        .glow-card:hover::before, .glow-card:hover::after {
+            opacity: 1;
+        }
+        
+        .glow-content {
+            position: relative;
+            z-index: 2;
         }
 
-        /* Header Section (Sticky) */
-        header {
-            background-color: var(--charcoal);
-            padding: 1rem 0;
-            border-bottom: 4px solid var(--slate-blue);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
-
-        .header-brand {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            text-decoration: none;
-        }
-
-        .directives-logo {
-            height: 40px;
-            width: auto;
-        }
-
-        .header-title {
-            color: var(--white);
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin: 0;
-        }
-
-        .header-nav {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .header-nav a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: color 0.2s ease;
-        }
-
-        .header-nav a:hover {
-            color: var(--slate-blue);
-        }
-
-        /* Hero Section */
-        .hero {
-            background-color: var(--warm-grey);
-            padding: 4rem 0;
-            text-align: center;
-            border-bottom: 1px solid #dcd7d4;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--slate-blue);
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            max-width: 700px;
-            margin: 0 auto;
-            color: var(--charcoal);
-        }
-
-        /* Main Content Grid */
-        .about-content {
-            padding: 5rem 0;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: start;
-        }
-
-        .about-text h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--slate-blue);
-        }
-
-        .about-text p {
-            font-size: 1.1rem;
-            color: #4a4a4a;
-        }
-
-        .philosophy-card {
-            background-color: var(--white);
-            padding: 3rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--charcoal);
-        }
-
-        .philosophy-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Bio Section */
-        .bio-section {
-            background-color: var(--white);
-            padding: 5rem 0;
-            border-top: 1px solid #dcd7d4;
-            border-bottom: 1px solid #dcd7d4;
-        }
-
-        .bio-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .bio-container h2 {
-            color: var(--slate-blue);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        /* Call to Action */
-        .cta {
-            padding: 5rem 0;
-            text-align: center;
-            background-color: var(--charcoal);
-            color: var(--white);
-        }
-
-        .cta h2 {
-            color: var(--white);
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--slate-blue);
-            color: var(--white);
-            padding: 1rem 2.5rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 3px;
-            margin-top: 1.5rem;
-            transition: background-color 0.2s ease;
-        }
-
-        .btn:hover {
-            background-color: #3b5a75;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            .header-nav {
-                display: none; /* Simplifies mobile view, can add a hamburger menu later if needed */
-            }
+        
+        .hero-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(14,165,233,0.225) 0%, rgba(2,6,23,0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
         }
     </style>
 </head>
-<body>
+<body class="antialiased overflow-x-hidden selection:bg-accent selection:text-white relative">
 
-    <header>
-        <div class="container header-content">
-            <a href="index.html" class="header-brand">
-                <img src="/image_0.png" alt="Stormforge Industries Logo" class="directives-logo">
-                <h1 class="header-title">Stormforge Directives</h1>
-            </a>
-            <nav class="header-nav">
-                <a href="/">Home</a>
-                <a href="mailto:directives@stormforge.industries">Contact Us</a>
-            </nav>
-        </div>
-    </header>
+    <!-- Global Absolute Hex Grid Overlay -->
+    <div class="absolute inset-0 pointer-events-none z-[1] bg-hex-pattern"></div>
 
-    <section class="hero">
-        <div class="container">
-            <h1>The Architect of Operational Policy</h1>
-            <p>We treat your business as a functional system. When systems break down, margins leak. We engineer the structural fixes.</p>
-        </div>
-    </section>
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="https://directives.stormforge.industries/" class="flex-shrink-0 flex items-center gap-2 cursor-pointer relative z-10">
+                    <img src="image_0.png" alt="Stormforge Industries Logo" class="directives-logo w-8 h-8 object-contain">
+                    <span class="font-bold text-xl tracking-wide text-white">
+                        STORMFORGE <span class="text-storm-400 font-light">| Directives</span>
+                    </span>
+                </a>
 
-    <section class="about-content container">
-        <div class="about-grid">
-            <div class="about-text">
-                <h2>Bridging Theory and Practice</h2>
-                <p>Stormforge Directives was founded on a singular principle: abstract governance is useless if it cannot be executed on the shop floor. Businesses and enterprises do not need academic whitepapers. They need concrete rules, watertight policies, and processes that function predictably under pressure.</p>
-                <p>We operate as problem-solvers. We investigate your processes and procedures, disover where it's broken down, where the cash is bleeding out, and where the gears have stopped turning, and then we write the exact policy required to stop the bleed and solve the problem.</p>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8 relative z-10">
+                    <a href="https://directives.stormforge.industries/" class="text-sm font-medium text-storm-300 hover:text-white transition-colors">Home</a>
+                    <a href="https://hearth.stormforge.industries/" class="text-sm font-medium text-storm-300 hover:text-white transition-colors flex items-center gap-1 group">
+                        Hearth 
+                        <svg class="w-3.5 h-3.5 opacity-70 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center relative z-10">
+                    <button id="mobile-menu-btn" class="text-storm-300 hover:text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
-
-            <div class="philosophy-card">
-                <h3>Our Functionalist Approach</h3>
-                <p>We do not rely on standard industry templates or generic business advice. Our methodology is rooted in analytical problem-solving and logical decision-making. We dissect your business to understand exactly how its internal mechanisms interact.</p>
-                <p>By mapping these operational attributes, we can isolate failures with absolute precision and build scalable frameworks that protect both your liability and your bottom line.</p>
-            </div>
         </div>
-    </section>
 
-    <section class="bio-section">
-        <div class="bio-container">
-            <h2>About the Founder</h2>
-            <p>Izak Tait built Stormforge Directives to bring high-level systemic rigour to the business policy market. With an extensive background in complex government policy architecture and advanced analytical philosophy, he specialises in untangling broken systems.</p>
-            <p>His career is defined by taking highly abstract, chaotic environments and imposing logical, measurable order. Whether designing governance frameworks for research institutes or providing advice to local and national government, his approach remains identical: identify the systemic failure, remove the inefficiency, and implement a permanent, functional solution.</p>
-            <div style="margin-top: 2rem; display: flex; justify-content: center; align-items: center; gap: 0.5rem;">
-                <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: var(--slate-blue);" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
-                <a href="https://www.linkedin.com/in/izak-tait/" target="_blank" rel="noopener noreferrer" style="color: var(--slate-blue); font-weight: 600; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s ease;" onmouseover="this.style.borderBottom='1px solid var(--slate-blue)'" onmouseout="this.style.borderBottom='1px solid transparent'">
-                    Connect with Izak on LinkedIn
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="md:hidden hidden bg-storm-900 border-t border-storm-800 absolute w-full z-40">
+            <div class="px-4 pt-2 pb-6 space-y-1 shadow-2xl relative z-10">
+                <a href="https://directives.stormforge.industries/" class="block px-3 py-3 text-base font-medium text-storm-300 hover:text-white hover:bg-storm-800 rounded-md">Home</a>
+                <a href="https://hearth.stormforge.industries/" class="block px-3 py-3 text-base font-medium text-storm-300 hover:text-white hover:bg-storm-800 rounded-md flex items-center gap-2">
+                    Hearth <svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                 </a>
             </div>
         </div>
-    </section>
+    </nav>
 
-    <section class="cta">
-        <div class="container">
-            <h2>Ready to optimise your systems?</h2>
-            <p style="color: #ccc; margin-bottom: 2rem;">Strict confidentiality and absolute discretion are guaranteed.</p>
-            <a href="mailto:directives@stormforge.industries" class="btn">Request a Confidential Audit</a>
+    <header class="relative pt-40 pb-20 overflow-hidden min-h-[50vh] flex items-center">
+        <div class="hero-glow"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center w-full">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-white mb-6 leading-tight animate-fade-in-up">
+                    The Architect of <br/>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-storm-200 to-storm-500">Operational Policy</span>
+                </h1>
+                <p class="text-lg md:text-xl text-storm-400 animate-fade-in-up" style="animation-delay: 0.2s;">
+                    We treat your business as a functional system. When systems break down, margins leak. We engineer the structural fixes.
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <section class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+                
+                <!-- Left Text Column -->
+                <div class="space-y-6 reveal">
+                    <h2 class="text-3xl font-bold text-white mb-6">Bridging Theory and Practice</h2>
+                    <div class="w-12 h-1 bg-accent rounded-full mb-8"></div>
+                    <div class="prose prose-invert prose-lg max-w-none text-storm-300 leading-relaxed">
+                        <p>
+                            Stormforge Directives was founded on a singular principle: abstract governance is useless if it cannot be executed on the shop floor. Businesses and enterprises do not need academic whitepapers. They need concrete rules, watertight policies, and processes that function predictably under pressure.
+                        </p>
+                        <p>
+                            We operate as problem-solvers. We investigate your processes and procedures, discover where it's broken down, where the cash is bleeding out, and where the gears have stopped turning, and then we write the exact policy required to stop the bleed and solve the problem.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Card Column -->
+                <div class="reveal" style="transition-delay: 100ms;">
+                    <div class="glow-card p-8 md:p-10">
+                        <div class="glow-content">
+                            <div class="w-12 h-12 rounded-lg bg-storm-800/80 flex items-center justify-center mb-8 border border-storm-700 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+                                <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                            </div>
+                            
+                            <h3 class="text-2xl font-bold text-white mb-4">Our Functionalist Approach</h3>
+                            
+                            <div class="space-y-4 text-storm-300 leading-relaxed text-sm">
+                                <p>
+                                    We do not rely on standard industry templates or generic business advice. Our methodology is rooted in analytical problem-solving and logical decision-making. We dissect your business to understand exactly how its internal mechanisms interact.
+                                </p>
+                                <p>
+                                    By mapping these operational attributes, we can isolate failures with absolute precision and build scalable frameworks that protect both your liability and your bottom line.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </section>
 
+    <section class="py-24 relative overflow-hidden bg-gradient-to-b from-storm-950 via-storm-900 to-storm-950">
+        <!-- Smooth edge transitions -->
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent z-0"></div>
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-3/4 h-24 bg-accent/15 blur-[40px] rounded-full pointer-events-none z-0"></div>
+        
+        <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent z-0"></div>
+        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-3/4 h-24 bg-accent/15 blur-[40px] rounded-full pointer-events-none z-0"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="glass-card p-10 md:p-14 rounded-2xl reveal shadow-2xl border border-storm-700/50 text-center">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-storm-800/50 border border-storm-700 text-sm text-accent mb-6 mx-auto">
+                    Leadership
+                </div>
+                
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-8">About the Founder</h2>
+                
+                <div class="text-storm-300 text-lg leading-relaxed space-y-6 max-w-2xl mx-auto text-left">
+                    <p>
+                        Izak Tait built Stormforge Directives to bring high-level systemic rigour to the business policy market. With an extensive background in complex government policy architecture and advanced analytical philosophy, he specialises in untangling broken systems.
+                    </p>
+                    <p>
+                        His career is defined by taking highly abstract, chaotic environments and imposing logical, measurable order. Whether designing governance frameworks for research institutes or providing advice to local and national government, his approach remains identical: identify the systemic failure, remove the inefficiency, and implement a permanent, functional solution.
+                    </p>
+                    <p>
+                        With a doctorate in philosophy of mind and meta-ethics, Izak's approach is rooted in a deep understanding of the philosophical underpinnings of human action and decision-making, ensuring that your policies are not only functional but also ethically sound and aligned with your organisation's values.
+                    </p>
+                </div>
+                
+                <div class="mt-12 flex justify-center items-center gap-3">
+                    <a href="https://www.linkedin.com/in/izak-tait/" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-3 px-6 py-3 rounded-full bg-storm-800 border border-storm-700 hover:bg-storm-700 hover:border-accent transition-all text-white font-medium text-sm">
+                        <svg class="w-5 h-5 text-accent group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        Connect with Izak on LinkedIn
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fully Updated Contact Form Section -->
+    <section id="contact" class="py-24 relative overflow-hidden bg-storm-950">
+        <!-- Glow -->
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-64 bg-accent/15 blur-[100px] rounded-full pointer-events-none z-0"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center reveal">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Ready to optimise your systems?</h2>
+            <p class="text-storm-400 mb-10 font-medium max-w-2xl mx-auto">
+                Strict confidentiality and absolute discretion are guaranteed.
+            </p>
+            
+            <form onsubmit="submitForm(event)" class="max-w-md mx-auto space-y-4 text-left glass-card p-8 rounded-2xl">
+                <!-- Web3Forms Honeypot for spam protection -->
+                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                
+                <div>
+                    <label for="name" class="block text-sm font-medium text-storm-300 mb-1">Full Name</label>
+                    <input type="text" id="name" name="name" required class="w-full px-4 py-3 bg-storm-900 border border-storm-700 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent text-white outline-none transition-all placeholder-storm-600" placeholder="Jane Doe">
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-storm-300 mb-1">Corporate Email</label>
+                    <input type="email" id="email" name="email" required class="w-full px-4 py-3 bg-storm-900 border border-storm-700 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent text-white outline-none transition-all placeholder-storm-600" placeholder="jane@company.com">
+                </div>
+                <div>
+                    <label for="message" class="block text-sm font-medium text-storm-300 mb-1">Inquiry Context</label>
+                    <textarea id="message" name="message" required rows="4" class="w-full px-4 py-3 bg-storm-900 border border-storm-700 rounded-lg focus:ring-2 focus:ring-accent focus:border-accent text-white outline-none transition-all resize-none placeholder-storm-600" placeholder="Briefly describe your objectives..."></textarea>
+                </div>
+                <button type="submit" class="w-full py-4 bg-white text-storm-900 font-bold rounded-lg hover:bg-storm-200 transition-colors shadow-lg mt-2 flex justify-center items-center gap-2">
+                    Request a Confidential Audit
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </button>
+                <div id="form-success" class="hidden text-emerald-400 text-sm text-center mt-3 font-medium">Message received. We will be in touch shortly.</div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer with Inter-Page Links -->
+    <footer class="bg-storm-950 pt-16 pb-8 border-t border-storm-800 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <!-- Brand -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="image_0.png" alt="Stormforge Industries Logo" class="h-6 w-auto">
+                        <span class="font-bold text-lg tracking-wide text-white">
+                            STORMFORGE <span class="text-storm-500 font-light">| Industries</span>
+                        </span>
+                    </div>
+                    <p class="text-storm-400 text-sm leading-relaxed max-w-sm">
+                        Premier advisory and support services. Empowering individuals and businesses to navigate complex challenges and achieve long-term success.
+                    </p>
+                </div>
+                
+                <!-- Links -->
+                <div class="md:col-start-4">
+                    <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Navigation</h4>
+                    <ul class="space-y-2 text-sm text-storm-400">
+                        <li><a href="https://directives.stormforge.industries/" class="hover:text-accent transition-colors">Home</a></li>
+                        <li><a href="about.html" class="hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="https://directives.stormforge.industries/#expertise" class="hover:text-accent transition-colors">Expertise</a></li>
+                        <li><a href="https://directives.stormforge.industries/#approach" class="hover:text-accent transition-colors">Our Approach</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-storm-800 text-center md:text-left text-sm text-storm-500 flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; <span id="year"></span> Stormforge Industries. All rights reserved.</p>
+                <div class="mt-4 md:mt-0 flex items-center">
+                    <!-- Social placeholder empty as requested -->
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const icon = document.getElementById('menu-icon');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            if (menu.classList.contains('hidden')) {
+                icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16'); // Hamburger
+            } else {
+                icon.setAttribute('d', 'M6 18L18 6M6 6l12 12'); // Close (X)
+            }
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('bg-storm-900/95', 'shadow-lg');
+                navbar.classList.remove('glass-nav');
+            } else {
+                navbar.classList.remove('bg-storm-900/95', 'shadow-lg');
+                navbar.classList.add('glass-nav');
+            }
+        });
+
+        // Scroll Reveal Animation (Intersection Observer)
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
+
+        // Mouse Move Effect for Glow Cards
+        document.querySelectorAll('.glow-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // Async Form Submission Handler
+        async function submitForm(e) {
+            e.preventDefault();
+    
+            // Identify the button and its parent form
+            const btn = e.currentTarget.tagName === 'BUTTON' ? e.currentTarget : e.currentTarget.querySelector('button[type="submit"]');
+            const form = btn.closest('form');
+            const originalText = btn.innerHTML;
+            
+            // Trigger loading state
+            btn.innerHTML = `<svg class="animate-spin h-5 w-5 text-storm-900 inline mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Processing...`;
+            btn.disabled = true;
+            
+            // Package the form data and append the access key
+            const formData = new FormData(form);
+            formData.append("access_key", "fafc89eb-ee5c-4963-a179-e4eb1fface45");
+            
+            try {
+                const response = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('form-success').classList.remove('hidden');
+                    form.reset();
+                } else {
+                    alert("There was an issue submitting your request. Please email us directly.");
+                }
+            } catch (error) {
+                alert("Network error. Please check your connection and try again.");
+            } finally {
+                // Restore button state
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('form-success').classList.add('hidden');
+                }, 5000);
+            }
+        }
+    </script>
 </body>
 </html>
